@@ -1,32 +1,64 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div>
+  <v-app>
+    <v-app-bar app color="#F5A623" dark>
+      <h2>Realm Address Book</h2>
+      <v-spacer></v-spacer>
+
+      <h5 v-if="isloggedIn">{{ currentUser }}</h5>
+
+      <v-btn v-if="!isloggedIn" text @click="login">
+        Login
+      </v-btn>
+      <v-btn v-if="!isloggedIn" text @click="register">
+        Register
+      </v-btn>
+      <v-btn v-if="isloggedIn" color="black" @click="logout" text>
+        Logout
+      </v-btn>
+    </v-app-bar>
+
+    <v-content>
+      <v-container>
+        <router-view></router-view>
+      </v-container>
+    </v-content>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import firebase from "firebase";
+export default {
+  name: "App",
 
-#nav {
-  padding: 30px;
+  components: {},
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+  data() {
+    return {
+      isloggedIn: false,
+      currentUser: false,
+    };
+  },
+  created() {
+    if (firebase.auth().currentUser) {
+      this.isloggedIn = true;
+      this.currentUser = firebase.auth().currentUser.email;
     }
-  }
-}
-</style>
+  },
+  methods: {
+    logout() {
+      firebase
+        .auth()
+        .signOut()
+        .then(() => {
+         this.$router.go({path:this.$router.path});
+        });
+    },
+    login() {
+      this.$router.push("/login");
+    },
+    register() {
+      this.$router.push("/register");
+    },
+  },
+};
+</script>
