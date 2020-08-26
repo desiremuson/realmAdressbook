@@ -22,11 +22,7 @@
               <div>Tel: {{ contact.telephone }}</div>
               <div>Email: {{ contact.email }}</div>
             </v-card-text>
-            <v-card-actions>
-              <!-- <v-btn color="error" fab small dark>
-                <v-icon>mdi-close-circle</v-icon>
-              </v-btn>
-              <v-spacer></v-spacer> -->
+            <v-card-actions>             
 
               <router-link
                 v-bind:to="{

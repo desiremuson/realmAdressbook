@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="#F5A623" dark>
-      <h2>Realm Address Book</h2>
+      <h2>Address Book</h2>
       <v-spacer></v-spacer>
 
       <h5 v-if="isloggedIn">{{ currentUser }}</h5>
